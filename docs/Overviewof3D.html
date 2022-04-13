@@ -208,6 +208,11 @@ const thebe_selector_output = ".output, .cell_output"
    How to write a DLC Methods Section
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="recipes/OpenVINO.html">
+   Intel OpenVINO backend
+  </a>
+ </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -436,8 +441,8 @@ const thebe_selector_output = ".output, .cell_output"
 <h1>3D DeepLabCut<a class="headerlink" href="#d-deeplabcut" title="Permalink to this headline">¶</a></h1>
 <p>In this repo we directly support 2-camera based 3D pose estimation. If you want n camera support, plus nicer optimization methods, please see our new work that was published at <a class="reference external" href="https://github.com/African-Robotics-Unit/AcinoSet">ICRA 2021 on strong baseline 3D models (and a 3D dataset)</a>. In the link you will find how we optimize 6+ camera DLC output data for cheetahs (and see more below).</p>
 <img src="https://images.squarespace-cdn.com/content/v1/57f6d51c9f74566f55ecf271/1589578632599-HQENUYUIBI9KYTZA2WXV/ke17ZwdGBToddI8pDm48kBgERiRoVg6XJpnbAnG076FZw-zPPgdn4jUwVcJE1ZvWhcwhEtWJXoshNdA9f1qD7Y5_KuY_fkOEvGrDVB8aRb13EC_7Ld97nVeJG4MMJk1tqSdWG3KOMGCA68a4XjyT5g/3D.png?format=300w" width="350" title="DLC-3D" alt="DLC 3D" align="right" vspace = "50">
-<p><strong>Our code base in this repo assumes you:</strong></p>
-<p>A. You have 2D videos and a DeepLabCut network to analyze them as described in the <a class="reference external" href="https://github.com/AlexEMG/DeepLabCut/blob/master/docs/UseOverviewGuide.md">main documentation</a>. This can be with multiple separate networks for each camera, or one network trained on all views (See <a class="reference external" href="https://www.biorxiv.org/content/10.1101/476531v1">Nath*, Mathis* et al., 2019</a>).</p>
+<p><strong>ATTENTION: Our code base in this repo assumes you:</strong></p>
+<p>A. You have 2D videos and a DeepLabCut network to analyze them as described in the <a class="reference external" href="https://github.com/AlexEMG/DeepLabCut/blob/master/docs/UseOverviewGuide.md">main documentation</a>. This can be with multiple separate networks for each camera (less recommended), or one network trained on all views - recommended! (See <a class="reference external" href="https://www.biorxiv.org/content/10.1101/476531v1">Nath*, Mathis* et al., 2019</a>). We also support multi-animal 3D with this code (please see <a class="reference external" href="https://doi.org/10.1038/s41592-022-01443-0">Lauer et al. 2022</a>).</p>
 <p>B. You are using 2 cameras, in a <a class="reference external" href="https://github.com/DeepLabCut/DeepLabCut/blob/5ac4c8cb6bcf2314a3abfcf979b8dd170608e094/deeplabcut/pose_estimation_3d/camera_calibration.py#L223">stereo configuration</a>, for 3D*.</p>
 <p>C. You have calibration images taken (see details below!).</p>
 <div class="section" id="if-you-need-more-than-2-camera-support">
@@ -452,9 +457,13 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="section" id="jump-in-with-direct-deeplabcut-2-camera-support">
 <h2>Jump in with direct DeepLabCut 2-camera support:<a class="headerlink" href="#jump-in-with-direct-deeplabcut-2-camera-support" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>single animal DeepLabCut and multi-animal DeepLabCut (maDLC) projects are supported:</p></li>
+</ul>
 <p align="center">
-<img src= https://images.squarespace-cdn.com/content/v1/57f6d51c9f74566f55ecf271/1560968522350-COKR986AQESF5N1N7QNK/ke17ZwdGBToddI8pDm48kNaO57GzHjWqV-xM6jVvY6ZZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZUJFbgE-7XRK3dMEBRBhUpyR5k0u27ivMv3az5DOhUvLuYQefjfUWYPEDVexVC_mSas4X78tjQKn3yE00zHvnK8/3D_maousLarger.gif?format=750w width="85%">
- </p>
+<img src= "https://images.squarespace-cdn.com/content/v1/57f6d51c9f74566f55ecf271/1560968522350-COKR986AQESF5N1N7QNK/ke17ZwdGBToddI8pDm48kNaO57GzHjWqV-xM6jVvY6ZZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZUJFbgE-7XRK3dMEBRBhUpyR5k0u27ivMv3az5DOhUvLuYQefjfUWYPEDVexVC_mSas4X78tjQKn3yE00zHvnK8/3D_maousLarger.gif?format=750w" height="200">
+<img src="https://images.squarespace-cdn.com/content/v1/57f6d51c9f74566f55ecf271/cd423302-0389-4b63-8869-b787a2c52b8b/maDLC_3d.gif?format=1500w" height="200">
+</p>
 <div class="section" id="create-a-new-3d-project">
 <h3>(1) Create a New 3D Project:<a class="headerlink" href="#create-a-new-3d-project" title="Permalink to this headline">¶</a></h3>
 <p>Watch a <a class="reference external" href="https://youtu.be/Eh6oIGE4dwI">DEMO VIDEO</a> on how to use this code, and check out the Notebook <a class="reference external" href="https://github.com/DeepLabCut/DeepLabCut/blob/master/examples/JUPYTER/Demo_3D_DeepLabCut.ipynb">here</a>!</p>
@@ -471,7 +480,7 @@ const thebe_selector_output = ".output, .cell_output"
 <p>The purpose of the subdirectories is as follows:</p>
 <p><strong>calibration_images:</strong> This directory will contain a set of calibration images acquired from the two cameras. A calibration image can be acquired using a printed checkerboard and its pair wise images are taken from both the cameras to consider as a set of calibration images. These pair of images are saved as <code class="docutils literal notranslate"><span class="pre">.jpg</span></code> with camera names as the prefix. e.g. <code class="docutils literal notranslate"><span class="pre">camera-1-01.jpg</span></code> and <code class="docutils literal notranslate"><span class="pre">camera-2-01.jpg</span></code> for the first pair of images. While taking the images:</p>
 <ul class="simple">
-<li><p>Keep the orientation of the chessboard same and do not rotate more than 30 degrees. Rotating the chessboard circularly will change the origin across the frames and may result in incorrect order of detected corners.</p></li>
+<li><p>Keep the orientation of the chessboard same and do not rotate more than 30 degrees. Rotating the chessboard circular will change the origin across the frames and may result in incorrect order of detected corners.</p></li>
 <li><p>Cover several distances, and within each distance, cover all parts of the image view (all corners and center).
 Use a chessboard as big as possible, ideally a chessboard with of at least 8x6 squares.</p></li>
 <li><p>Aim for taking at least 70 pair of images as after corner detection, some of the images might need to be discarded due to either incorrect corner detection or incorrect order of detected corners.</p></li>
@@ -498,7 +507,7 @@ Use a chessboard as big as possible, ideally a chessboard with of at least 8x6 s
 <ul class="simple">
 <li><p>While taking the images:</p>
 <ul>
-<li><p>Keep the orientation of the checkerboard the same and do not rotate it more than 30 degrees. Rotating the checkerboard circularly will change the origin across the frames and may result in incorrect order of detected corners.</p></li>
+<li><p>Keep the orientation of the checkerboard the same and do not rotate it more than 30 degrees. Rotating the checkerboard circular will change the origin across the frames and may result in incorrect order of detected corners.</p></li>
 <li><p>Cover several distances, and within each distance, cover all parts of the image view (all corners and center).</p></li>
 <li><p>Use a checkerboard as big as possible, ideally with at least 8x6 squares.</p></li>
 <li><p>Aim for taking at least 30-70 pair of images, as after corner detection, some of the images might need to be discarded due to either incorrect corner detection or incorrect order of detected corners.</p></li>
@@ -633,7 +642,7 @@ zlim: list
 </div>
 <div class="section" id="if-you-use-this-code">
 <h3>If you use this code:<a class="headerlink" href="#if-you-use-this-code" title="Permalink to this headline">¶</a></h3>
-<p>We kindly ask that you cite <a class="reference external" href="https://www.nature.com/articles/s41593-018-0209-y">Mathis et al, 2018</a> <strong>&amp;</strong> <a class="reference external" href="https://doi.org/10.1038/s41596-019-0176-0">Nath*, Mathis*, et al., 2019</a>.</p>
+<p>We kindly ask that you cite <a class="reference external" href="https://www.nature.com/articles/s41593-018-0209-y">Mathis et al, 2018</a> <strong>&amp;</strong> <a class="reference external" href="https://doi.org/10.1038/s41596-019-0176-0">Nath*, Mathis*, et al., 2019</a>. If you use 3D multi-animal: <a class="reference external" href="https://doi.org/10.1038/s41592-022-01443-0">Lauer et al. 2022</a>.</p>
 </div>
 </div>
 </div>
