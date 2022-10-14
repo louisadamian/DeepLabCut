@@ -1,12 +1,13 @@
+(how-to-install)=
 # How To Install DeepLabCut
 
-DeepLabCut can be run on Windows, Linux, or MacOS (see also [technical considerations](/docs/installation.md#technical-considerations)).
+DeepLabCut can be run on Windows, Linux, or MacOS (see also [technical considerations](tech-considerations-during-install) and if you run into issues also check out [installation ProTips](installTips)).
 
 ## PIP:
 
 - Everything you need to run DeepLabCut (i.e., our source code and our dependencies) can be installed with `pip install 'deeplabcut[gui]'` (for GUI support) or without: `pip install deeplabcut`.
 
-- Please note, there are several modes of installation, and the user should decide to either use a **system-wide** (see [note below](/docs/installation.md#system-wide-considerations)), **Anaconda environment** based installation (**recommended**), or the supplied [**Docker container**](https://github.com/DeepLabCut/DeepLabCut/tree/master/docker.md) (recommended for Ubuntu advanced users). One can of course also use other Python distributions than Anaconda, but **Anaconda is the easiest route.**
+- Please note, there are several modes of installation, and the user should decide to either use a **system-wide** (see [note below](system-wide-considerations-during-install)), **Anaconda environment** based installation (**recommended**), or the supplied [**Docker container**](docker-containers) (recommended for Ubuntu advanced users). One can of course also use other Python distributions than Anaconda, but **Anaconda is the easiest route.**
 
 ## CONDA: The installation process is as easy as this figure! -->
 
@@ -28,7 +29,7 @@ DeepLabCut can be run on Windows, Linux, or MacOS (see also [technical considera
 
 ### Step 2: please use our supplied Anaconda environment
 
-- **Click [HERE](http://www.mackenziemathislab.org/s/DEEPLABCUT.yaml) to download the conda file!**
+- **Click [HERE](https://www.mackenziemathislab.org/s/DEEPLABCUT.yaml) to download the conda file!**
 (or you can grab from github: git clone this repo (in the terminal/cmd program, while **in a folder** you wish to place DeepLabCut
 To git clone type: ``git clone https://github.com/DeepLabCut/DeepLabCut.git``). Note, this can be anywhere, even downloads is fine)
 
@@ -41,17 +42,16 @@ If you cloned the repo onto your Desktop, the command may look like:
 
 To get the location right, a cool trick is to drag the folder and drop it into Terminal. Alternatively, you can (on Windows) hold SHIFT and right-click > Copy as path, or (on Mac) right-click and while in the menu press the OPTION key to reveal Copy as Pathname.
 
-(C) Now, in the terminal run:
+- Now, in the terminal run:
 
 ``conda env create -f DEEPLABCUT.yaml``
 
 
-(D) You can now use this environment from anywhere on your comptuer (i.e. no need to go back into the conda- folder). Just enter your environment by running:
+- You can now use this environment from anywhere on your comptuer (i.e. no need to go back into the conda- folder). Just enter your environment by running:
+     - Ubuntu/MacOS: ``source/conda activate nameoftheenv`` (i.e. on your Mac: ``conda activate DEEPLABCUT``)
+     - Windows: ``activate nameoftheenv`` (i.e. ``activate DEEPLABCUT``)
 
-- Ubuntu/MacOS: ``source/conda activate nameoftheenv`` (i.e. on your Mac: ``conda activate DEEPLABCUT``)
-- Windows: ``activate nameoftheenv`` (i.e. ``activate DEEPLABCUT``)
-
-Now you should see (`nameofenv`) on the left of your teminal screen, i.e. ``(DEEPLABCUT) YourName-MacBook...``
+Now you should see (`nameofenv`) on the left of your terminal screen, i.e. ``(DEEPLABCUT) YourName-MacBook...``
 NOTE: no need to run pip install deeplabcut, as it is already installed!!! :)
 
 **Great, that's it! DeepLabCut is installed!**
@@ -64,11 +64,13 @@ Next, [head over to the Docs to decide which mode to use DeepLabCut in. You have
 
 ### Pro Tips:
 
+More [installation ProTips](installTips) are also available.
+
 If you ever want to update your DLC, just run `pip install --upgrade deeplabcut` once you are inside your env. If you want to use a specific release, then you need to specify the version you want, such as `pip install deeplabcut==2.2`. Once installed, you can check the version by running `import deeplabcut` `deeplabcut.__version__`. Don't be afraid to update, DLC is backwards compatible with your 2.0+ projects and performance continues to get better and new features are added nearly monthly.
 
 Here are some conda environment management tips: https://kapeli.com/cheat_sheets/Conda.docset/Contents/Resources/Documents/index
 
-**Pro Tip:** If you want to modify code and then test it, you can use our provided testscripts. This would mean you need to be up-to-date with the latest GitHub-based code though! Please see [here](https://github.com/DeepLabCut/DeepLabCut/wiki/How-to-use-the-latest-GitHub-code) on how to get the latest GitHub code, and how to test your installation by following this video: https://www.youtube.com/watch?v=IOWtKn3l33s
+**Pro Tip:** If you want to modify code and then test it, you can use our provided testscripts. This would mean you need to be up-to-date with the latest GitHub-based code though! Please see [here](installTips) on how to get the latest GitHub code, and how to test your installation by following this video: https://www.youtube.com/watch?v=IOWtKn3l33s.
 
 
 ### Creating your own customized conda env (recommended route for Linux: Ubuntu, CentOS, Mint, etc.)
@@ -150,11 +152,12 @@ DEEPLABCUT:
 
 - if you git clone or download this folder, and are inside of it then ``import deeplabcut`` will import the package from there rather than from the latest on PyPi!
 
-
+(system-wide-considerations-during-install)=
 ## System-wide considerations:
 
 If you perform the system-wide installation, and the computer has other Python packages or TensorFlow versions installed that conflict, this will overwrite them. If you have a dedicated machine for DeepLabCut, this is fine. If there are other applications that require different versions of libraries, then one would potentially break those applications. The solution to this problem is to create a virtual environment, a self-contained directory that contains a Python installation for a particular version of Python, plus additional packages. One way to manage virtual environments is to use conda environments (for which you need Anaconda installed).
 
+(tech-considerations-during-install)=
 ## Technical Considerations:
 
 - Computer:
@@ -174,8 +177,8 @@ If you perform the system-wide installation, and the computer has other Python p
      - TensorFlow
        - You will need [TensorFlow](https://www.tensorflow.org/) (we used version 1.0 in the paper, later versions also work with the provided code (we tested **TensorFlow versions 1.0 to 1.15, and 2.0 to 2.5**; we recommend TF2.5 now) for Python 3.7, 3.8, or 3.9 with GPU support.
         - To note, is it possible to run DeepLabCut on your CPU, but it will be VERY slow (see: [Mathis & Warren](https://www.biorxiv.org/content/early/2018/10/30/457242)). However, this is the preferred path if you want to test DeepLabCut on your own computer/data before purchasing a GPU, with the added benefit of a straightforward installation! Otherwise, use our COLAB notebooks for GPU access for testing.
-     - Docker: We highly recommend advanced users use the supplied [Docker container](https://github.com/DeepLabCut/DeepLabCut/tree/master/docker.md)
+     - Docker: We highly recommend advanced users use the supplied [Docker container](docker-containers)
 
 
 
-Return to [readme](../README.md).
+Return to [readme](readme).
